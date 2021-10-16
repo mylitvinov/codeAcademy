@@ -97,3 +97,20 @@ const handleValueChange = value => {
 humanGuessInput.addEventListener('input', function(e) {
   handleValueChange(e.target.value);
 });
+
+const buttons = document.querySelectorAll(".button");
+
+for (const button of buttons) {
+  button.addEventListener("mouseover", mouseover);
+  button.addEventListener("mouseout", mouseout);
+}
+
+console.log(buttons)
+
+function mouseover(event) {
+  event.target.classList.add("hovered");
+}
+
+function mouseout(event) {
+  event.target.classList.remove("hovered");
+}
