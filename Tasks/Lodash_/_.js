@@ -53,21 +53,27 @@ const _ = {
       return predicateValue ? key : undefined;
     }
   },
-  drop(array,n) {
-    if( n === undefined) {
-      n = 1
+  drop(array, n) {
+    if (n === undefined) {
+      n = 1;
     }
-    let droppedArray = array.slice(n,array.length)
-    return droppedArray
+    let droppedArray = array.slice(n, array.length);
+    return droppedArray;
   },
 
-  dropWhile(array,predicate){
-    const cb = (el,index) => {
-      return !predicate(el,index,array)
-    }
-    let dropNumber = array.findIndex(cb)
-    let droppedArray = this.drop(array,dropNumber)
-    return droppedArray
+  dropWhile(array, predicate) {
+    const cb = (el, index) => {
+      return !predicate(el, index, array);
+    };
+    let dropNumber = array.findIndex(cb);
+    let droppedArray = this.drop(array, dropNumber);
+    return droppedArray;
   },
-  
+  chunk(array, size = 1) {
+    const chunkArray = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunkArray.push(array.slice(i, i + size));
+    }
+    return chunkArray;
+  },
 };
