@@ -60,4 +60,14 @@ const _ = {
     let droppedArray = array.slice(n,array.length)
     return droppedArray
   },
+
+  dropWhile(array,predicate){
+    const cb = (el,index) => {
+      return !predicate(el,index,array)
+    }
+    let dropNumber = array.findIndex(cb)
+    let droppedArray = this.drop(array,dropNumber)
+    return droppedArray
+  },
+  
 };
