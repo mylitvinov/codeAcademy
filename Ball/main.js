@@ -2,7 +2,7 @@ let ball = document.getElementById('float-circle');
 
 // Write your code below
 const up = () => {
-  ball.style.bottom = '250px'
+  ball.style.bottom = '650px'
 }
 
 const down = () => {
