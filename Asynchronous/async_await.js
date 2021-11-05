@@ -78,5 +78,40 @@ fivePromise()
    
   asyncFuncExample(); // Prints: I am resolved now!
 
+  //**************************************************************************** 
+  // Сравнение then() и await()
 
-  
+  function nativePromiseVersion() {
+    returnsFirstPromise()
+      .then((firstValue) => {
+        console.log(firstValue);
+        return returnsSecondPromise(firstValue);
+      })
+     .then((secondValue) => {
+        console.log(secondValue);
+      });
+  }
+
+  async function asyncAwaitVersion() {
+    let firstValue = await returnsFirstPromise();
+    console.log(firstValue);
+    let secondValue = await returnsSecondPromise(firstValue);
+    console.log(secondValue);
+  }
+
+  //************************************************************************** 
+  // try... catch
+
+  async function usingTryCatch() {
+    try {
+      let resolveValue = await asyncFunction('thing that will fail');
+      let secondValue = await secondAsyncFunction(resolveValue);
+    } catch (err) {
+      // Catches any errors in the try block
+      console.log(err);
+    }
+   }
+    
+   usingTryCatch();
+
+   
