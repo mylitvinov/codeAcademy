@@ -1,19 +1,22 @@
-
 import React, { useState, useEffect } from 'react';
 
 export default function Counter() {
-  const [clickCount, setClickCount] = useState(0);
-
-  const increment = () => setClickCount((prev) => prev + 1);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    document.addEventListener('mousedown', increment);
-    return () => {
-      document.removeEventListener('mousedown', increment);
-    };
+    alert(`Count: ${count}`);
   });
 
+  const handleClick = () => {
+    setCount((prevCount) =>  prevCount + 1);
+  };
+
   return (
-      <h1>Document Clicks: {clickCount}</h1>
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={handleClick}>
+        Click me
+      </button>
+    </div>
   );
 }
