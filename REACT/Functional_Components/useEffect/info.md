@@ -154,4 +154,41 @@ useEffect(() => {
   }
 });
 Во-вторых, хуки можно использовать только в функциях React. Мы не можем использовать хуки в компонентах класса, и мы не можем использовать хуки в обычных функциях JavaScript. Мы работаем с useState()и useEffect()компонентами функции, и это наиболее распространенное использование. Единственное другое место, где можно использовать хуки, - это кастомные хуки. Пользовательские хуки невероятно полезны для организации и повторного использования логики с отслеживанием состояния между функциональными компонентами. Для получения дополнительной информации по этой теме перейдите в React Docs .
+=============================================================================
 
+Отдельные крючки для отдельных эффектов
+Когда несколько значений тесно связаны и изменяются одновременно, имеет смысл сгруппировать эти значения в коллекцию, такую ​​как объект или массив. Объединение данных вместе может также усложнить код, отвечающий за управление этими данными. Поэтому рекомендуется разделять проблемы, управляя разными данными с помощью разных хуков.
+
+Сравните сложность здесь, когда данные объединены в один объект:
+
+// Handle both position and menuItems with one useEffect hook.
+const [data, setData] = useState({ position: { x: 0, y: 0 } });
+useEffect(() => {
+  get('/menu').then((response) => {
+    setData((prev) => ({ ...prev, menuItems: response.data }));
+  });
+  const handleMove = (event) =>
+    setData((prev) => ({
+      ...prev,
+      position: { x: event.clientX, y: event.clientY }
+    }));
+  window.addEventListener('mousemove', handleMove);
+  return () => window.removeEventListener('mousemove', handleMove);
+}, []);
+Для простоты здесь мы разделили проблемы:
+
+// Handle menuItems with one useEffect hook.
+const [menuItems, setMenuItems] = useState(null);
+useEffect(() => {
+  get('/menu').then((response) => setMenuItems(response.data));
+}, []);
+ 
+// Handle position with a separate useEffect hook.
+const [position, setPosition] = useState({ x: 0, y: 0 });
+useEffect(() => {
+  const handleMove = (event) =>
+    setPosition({ x: event.clientX, y: event.clientY });
+  window.addEventListener('mousemove', handleMove);
+  return () => window.removeEventListener('mousemove', handleMove);
+}, []);
+Не всегда очевидно , объединять ли данные вместе или разделять их , но с практикой мы научимся лучше организовывать наш код, чтобы его было легче понять, добавить, повторно использовать и протестировать!
